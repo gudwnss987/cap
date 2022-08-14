@@ -15,7 +15,7 @@ def get_diff_img(frame_a, frame_b, frame_c, threshold):
     frame_a_gray = cv2.cvtColor(frame_a, cv2.COLOR_BGR2GRAY)
     frame_b_gray = cv2.cvtColor(frame_b, cv2.COLOR_BGR2GRAY)
     frame_c_gray = cv2.cvtColor(frame_c, cv2.COLOR_BGR2GRAY)
-
+ 
     # 1,2 프레임, 2,3 프레임 영상들의 차를 구함
     diff_ab = cv2.absdiff(frame_a_gray, frame_b_gray)
     diff_bc = cv2.absdiff(frame_b_gray, frame_c_gray)
@@ -44,7 +44,7 @@ fourcc = cv2.VideoWriter_fourcc(*'XVID')    # 영상을 기록할 코덱 설정
 font = ImageFont.truetype('fonts/SCDream6.otf', 20) # 글꼴파일을 불러옴
 is_record = False                           # 녹화상태는 처음엔 거짓으로 설정
 on_record = False
-
+ 
 threshold = 40      # 영상 차이에 사용할 threshold 설정
 diff_max = 10       # 영상 차이 픽셀의 개수(이것 이상이면 움직임이 있다고 결정)
 cnt_record = 0      # 영상 녹화 시간 관련 변수
@@ -79,7 +79,7 @@ while True:
     frame = Image.fromarray(frame)    
     draw = ImageDraw.Draw(frame)    
     # xy는 텍스트 시작위치, text는 출력할 문자열, font는 글꼴, fill은 글자색(파랑,초록,빨강)   
-    draw.text(xy=(10, 15),  text="공대선배 웹캠 "+nowDatetime, font=font, fill=(255, 255, 255))
+    draw.text(xy=(10, 15),  text="과속단속 "+nowDatetime, font=font, fill=(255, 255, 255))
     frame = np.array(frame)
     frame_a = np.array(frame_b)
     frame_b = np.array(frame_c)

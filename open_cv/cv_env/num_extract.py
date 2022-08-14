@@ -5,7 +5,7 @@ import pytesseract
 plt.style.use('dark_background')
 
 
-img_ori = cv2.imread('1.jpg')
+img_ori = cv2.imread('4.jpg')
 
 height, width, channel = img_ori.shape
 
