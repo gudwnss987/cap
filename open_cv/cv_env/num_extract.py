@@ -5,7 +5,7 @@ import pytesseract
 plt.style.use('dark_background')
 
 
-img_ori = cv2.imread('4.jpg')
+img_ori = cv2.imread('capture1_2.jpg')
 
 height, width, channel = img_ori.shape
 
@@ -14,14 +14,14 @@ plt.imshow(img_ori, cmap='gray')
 
 
 
-# hsv = cv2.cvtColor(img_ori, cv2.COLOR_BGR2HSV)
-# gray = hsv[:,:,2]
+#hsv = cv2.cvtColor(img_ori, cv2.COLOR_BGR2HSV)
+#gray = hsv[:,:,2]
 gray = cv2.cvtColor(img_ori, cv2.COLOR_BGR2GRAY)
 
 plt.figure(figsize=(12, 10))
 plt.imshow(gray, cmap='gray')
-
-
+ 
+ 
 
 structuringElement = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
 
@@ -64,6 +64,7 @@ cv2.drawContours(temp_result, contours=contours, contourIdx=-1, color=(255, 255,
 
 plt.figure(figsize=(12, 10))
 plt.imshow(temp_result)
+test_0=temp_result  #윤곽선 표시
 
 
 
@@ -93,7 +94,7 @@ plt.imshow(temp_result, cmap='gray')
 
 MIN_AREA = 80
 MIN_WIDTH, MIN_HEIGHT = 2, 8
-MIN_RATIO, MAX_RATIO = 0.25, 1.0
+MIN_RATIO, MAX_RATIO = 0.44, 1.0
 
 possible_contours = []
 
@@ -119,7 +120,6 @@ for d in possible_contours:
 plt.figure(figsize=(12, 10))
 plt.imshow(temp_result, cmap='gray')
 
- 
 
 
 MAX_DIAG_MULTIPLYER = 5 # 5
@@ -199,6 +199,7 @@ for r in matched_result:
 plt.figure(figsize=(12, 10))
 plt.imshow(temp_result, cmap='gray')
 
+test_1=temp_result
 
 
 
@@ -256,14 +257,15 @@ for i, matched_chars in enumerate(matched_result):
     
     plt.subplot(len(matched_result), 1, i+1)
     plt.imshow(img_cropped, cmap='gray')
+test_2=img_cropped
 
 
 
-
+# 이후부터 이미지 손실
 
 longest_idx, longest_text = -1, 0
 plate_chars = []
-
+# 이미지 다시검사
 for i, plate_img in enumerate(plate_imgs):
     plate_img = cv2.resize(plate_img, dsize=(0, 0), fx=1.6, fy=1.6)
     _, plate_img = cv2.threshold(plate_img, thresh=0.0, maxval=255.0, type=cv2.THRESH_BINARY | cv2.THRESH_OTSU)
@@ -294,7 +296,7 @@ for i, plate_img in enumerate(plate_imgs):
                 
     img_result = plate_img[plate_min_y:plate_max_y, plate_min_x:plate_max_x]
     
-    img_result = cv2.GaussianBlur(img_result, ksize=(3, 3), sigmaX=0)
+    img_result = cv2.GaussianBlur(img_result, ksize=(3, 3), sigmaX=0) #img_result ->img_cropped
     _, img_result = cv2.threshold(img_result, thresh=0.0, maxval=255.0, type=cv2.THRESH_BINARY | cv2.THRESH_OTSU)
     img_result = cv2.copyMakeBorder(img_result, top=10, bottom=10, left=10, right=10, borderType=cv2.BORDER_CONSTANT, value=(0,0,0))
 
@@ -319,6 +321,14 @@ for i, plate_img in enumerate(plate_imgs):
     plt.subplot(len(plate_imgs), 1, i+1)
     plt.imshow(img_result, cmap='gray')
 
+
+test_3=img_result
+
+cv2.imshow("test_0",test_0)   #윤곽선
+cv2.imshow("test_1",test_1)   #사각형 그리기
+cv2.imshow("test_2",test_2)   
+cv2.imshow("test_3",test_3)   
+cv2.waitKey(0)
 
 
 
